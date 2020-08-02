@@ -21,8 +21,10 @@ Polska <- Polska %>%
               ifelse(is.na(lag(Daily,2)),0,lag(Daily,2)) +
               ifelse(is.na(lag(Daily,3)),0,lag(Daily,3)) 
           )/denominator) %>%
+          mutate(db="Poland") %>%
           rename(Prognoza = MultNormPred) %>%
-          filter(!is.na(Prognoza))
+          filter(!is.na(Prognoza)) %>%
+          select(-one_of("denominator"))
 
 Mazowsze <- read_xlsx(plik, sheet="Mazowsze") %>%
             select(c("Date","Cases","Fcst")) %>%
@@ -37,8 +39,10 @@ Mazowsze <- read_xlsx(plik, sheet="Mazowsze") %>%
                 ifelse(is.na(lag(Daily,2)),0,lag(Daily,2)) +
                 ifelse(is.na(lag(Daily,3)),0,lag(Daily,3)) 
             )/denominator) %>%
+            mutate(db="Mazowieckie") %>%
             rename(Prognoza = Fcst) %>%
-            rename(Data = Date)
+            rename(Data = Date) %>%
+            select(-one_of("denominator"))
   
 Warszawa <- read_xlsx(plik, sheet="Warszawa") %>%
             select(c("Date","Cases","Deaths","Recoveries","Hospitalized","HomeIzolation","Fcst")) %>%
@@ -54,7 +58,10 @@ Warszawa <- read_xlsx(plik, sheet="Warszawa") %>%
                 ifelse(is.na(lag(Daily,3)),0,lag(Daily,3)) 
             )/denominator) %>%
             mutate(Hospitalized_total = Hospitalized + HomeIzolation) %>%
+            mutate(db="Mazowieckie") %>%
             rename(Prognoza = Fcst) %>%
-            rename(Data = Date)
+            rename(Data = Date) %>%
+            select(-one_of("denominator"))
 
-
+Polska2DB <- Polska %>%
+            select(c("db","Data","Cases","Daily","Prognoza","MA7"))
