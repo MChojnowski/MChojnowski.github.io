@@ -1,13 +1,10 @@
 server <<- function(input, output) {
   
   data <- eventReactive (input$button, {
-    if (input$AreaList=="Poland"){
-      data <- Polska
-    } else if (input$AreaList=="Mazowieckie"){
-      data <- Mazowsze
-    } else if (input$AreaList=="Warsaw"){
-      data <- Warszawa  
-    }
+    data <- dane_COVID %>% 
+      filter(db==input$AreaList)
+    
+    data
   })
 
   output$DailyPlot <- renderPlot({

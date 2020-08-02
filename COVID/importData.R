@@ -58,10 +58,18 @@ Warszawa <- read_xlsx(plik, sheet="Warszawa") %>%
                 ifelse(is.na(lag(Daily,3)),0,lag(Daily,3)) 
             )/denominator) %>%
             mutate(Hospitalized_total = Hospitalized + HomeIzolation) %>%
-            mutate(db="Mazowieckie") %>%
+            mutate(db="Warsaw") %>%
             rename(Prognoza = Fcst) %>%
             rename(Data = Date) %>%
             select(-one_of("denominator"))
 
 Polska2DB <- Polska %>%
             select(c("db","Data","Cases","Daily","Prognoza","MA7"))
+MZ2DB <- Mazowsze %>%
+            select(c("db","Data","Cases","Daily","Prognoza","MA7"))
+WWA2DB <- Warszawa %>%
+            select(c("db","Data","Cases","Daily","Prognoza","MA7"))
+
+downloadable_data <- rbind(Polska2DB,MZ2DB,WWA2DB)
+
+write.csv(downloadable_data,"data.csv")
