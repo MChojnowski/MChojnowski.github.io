@@ -5,8 +5,9 @@ account: mchojnowski
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2634760
-bundleId: 3465573
+bundleId: 3572787
 url: https://mchojnowski.shinyapps.io/COVID/
-when: 1596375633.81937
+when: 1598801726.84283
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: data.csv|Epidemia.xlsx|importData.R|SIR_PL.csv
